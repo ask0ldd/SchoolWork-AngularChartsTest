@@ -4,9 +4,10 @@ import { JoMockapiService } from './jo-mockapi.service';
 import { CountriesMedalsPiechartComponent } from './countries-medals-piechart/countries-medals-piechart.component';
 import { CountryStatsLinechartComponent } from './country-stats-linechart/country-stats-linechart.component';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 const joRoutes: Routes = [
-  {path: 'medalspiechart', component: CountriesMedalsPiechartComponent},
+  {path: '', component: CountriesMedalsPiechartComponent},
   {path: 'countrylinechart/:id', component: CountryStatsLinechartComponent},
 ]
 
@@ -17,7 +18,8 @@ const joRoutes: Routes = [
   ],
   imports: [
     RouterModule.forChild(joRoutes),
-    CommonModule,    
+    CommonModule,
+    HttpClientModule,
   ],
   providers: [
     JoMockapiService
