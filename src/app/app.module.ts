@@ -9,8 +9,6 @@ import { CountryStatsLinechartComponent } from './jo/country-stats-linechart/cou
 @NgModule({
   declarations: [
     AppComponent,
-    CountriesMedalsPiechartComponent,
-    CountryStatsLinechartComponent,
   ],
   imports: [
     BrowserModule,
