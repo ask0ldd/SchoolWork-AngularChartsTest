@@ -15,4 +15,17 @@ export class JoMockapiService {
     }).catch(error => console.error(error))
   }
 
+  getCountryMedals(country : string) : number{
+    const JOStats = [...this.countriesJOStats] as ICountryJOStats[]
+    const targetCountryJOStats = JOStats.filter(stat => {
+      if(stat.country.toLowerCase() === country) return true
+      return false
+    })
+    let medals = 0
+    targetCountryJOStats[0].participations.forEach(participation => {
+      medals += participation.medalsCount | 0
+    })
+    return medals
+  }
+
 }

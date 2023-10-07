@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CountriesMedalsPiechartComponent } from './jo/countries-medals-piechart/countries-medals-piechart.component';
 import { CountryStatsLinechartComponent } from './jo/country-stats-linechart/country-stats-linechart.component';
+import { JoModule } from './jo/jo.module';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { CountryStatsLinechartComponent } from './jo/country-stats-linechart/cou
   ],
   imports: [
     BrowserModule,
+    JoModule,
     AppRoutingModule
   ],
   providers: [],
