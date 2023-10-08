@@ -14,6 +14,10 @@ export class CountriesMedalsPiechartComponent implements OnInit {
   processedValue : any
   pieDatas : {name : string, value : number} [] | undefined
 
+  colorScheme = {
+    domain:['#956065', '#793d52', '#89a1db', '#9780a1', '#bfe0f1']
+  }
+
   constructor(private JOService : JoMockapiService){ 
     // this.datas = this.JOService.CJS
   }
