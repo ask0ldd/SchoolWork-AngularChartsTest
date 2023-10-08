@@ -1,8 +1,15 @@
-<p>countries-medals-piechart works!</p>
 <div>
-<div *ngIf="pieDatas">
-    <ngx-charts-pie-chart>
-        
+<div *ngIf="pieDatas" style='display:flex; flex-direction: column;'>
+    <div>
+        <p>Number of JOs</p>
+        <p>{{pieDatas.length}}</p>
+    </div>
+    <div>
+        <p>Number of Countries</p>
+        <p>{{pieDatas.length}}</p>
+    </div>
+    <ngx-charts-pie-chart [results]="pieDatas" [labels]="true">
+
     </ngx-charts-pie-chart>
 </div>
 </div>

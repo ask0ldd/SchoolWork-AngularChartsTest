@@ -24,7 +24,7 @@ export class JoMockapiService {
   }
 
   async pieDatas(){
-    return (await this.JODatas).map((countryDatas : ICountryJOStats) => ({name : countryDatas.country, value : countryDatas.participations[0].medalsCount}))
+    return (await this.JODatas).map((countryDatas : ICountryJOStats) => ({name : countryDatas.country, value : countryDatas.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0)}))
   }
 
 }
