@@ -38,4 +38,12 @@ export class CountriesMedalsPiechartComponent implements OnInit {
     this.pieDatas = await this.JOService.pieDatas()
   }
 
+  setLabelFormatting(label : string): string {
+    return `<span style="font-size: 20px;">${label}</span>`
+  }
+
+  onSelect(event : any){
+    console.log("ohoho")
+  }
+
 }
