@@ -3,6 +3,7 @@ import { JoMockapiService } from '../jo-mockapi.service';
 import { ICountryJOStats } from 'src/app/models/countryJOStats';
 import { Observable, of } from 'rxjs';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-countries-medals-piechart',
@@ -13,7 +14,7 @@ export class CountriesMedalsPiechartComponent implements OnInit {
 
   // datas : WritableSignal<ICountryJOStats[] | null>
   processedValue : any
-  pieDatas : {name : string, value : number} [] | undefined
+  pieDatas : {name : string, value : number} []
 
   colorScheme : Color = {
     domain:['#956065', '#793d52', '#89a1db', '#9780a1', '#bfe0f1'],
@@ -22,7 +23,7 @@ export class CountriesMedalsPiechartComponent implements OnInit {
     name: 'Pie Scheme',
   }
 
-  constructor(private JOService : JoMockapiService){ 
+  constructor(private JOService : JoMockapiService, private router : Router, private route : ActivatedRoute,){ 
     // this.datas = this.JOService.CJS
   }
 
@@ -39,11 +40,16 @@ export class CountriesMedalsPiechartComponent implements OnInit {
   }
 
   setLabelFormatting(label : string): string {
-    return `<span style="font-size: 20px;">${label}</span>`
+    return `${label}`
   }
 
   onSelect(event : any){
-    console.log("ohoho")
+    // event obj : {name: 'Italy', value: 96, label: 'Italy'}
+    console.log(event)
+    if(event.name != null) {
+      this.router.navigateByUrl(`countrylinechart/${event.name.toLowerCase()}`) 
+      return
+    }
   }
 
 }
