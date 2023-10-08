@@ -1,5 +1,5 @@
 import { Injectable, WritableSignal, signal } from '@angular/core';
-import { ICountryJOStats } from '../models/countryJOStats';
+import { ICountryJOStats, IEventStats } from '../models/countryJOStats';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
@@ -10,7 +10,7 @@ export class JoMockapiService {
 
   JODatas : Promise<ICountryJOStats[]>
 
-  constructor(private http: HttpClient) {
+  constructor(/*private http: HttpClient*/) {
     this.JODatas = this.getJODatas()
   }
 
@@ -18,8 +18,13 @@ export class JoMockapiService {
     return (await fetch('../assets/olympic.json')).json()
   }
 
-  async getMedals(country : string){
-    return (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
+  async getCountryMedals(country : string){
+    const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
+    return selectedCountryDatas?.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0)
+  }
+
+  async pieDatas(){
+    return (await this.JODatas).map((countryDatas : ICountryJOStats) => ({name : countryDatas.country, value : countryDatas.participations[0].medalsCount}))
   }
 
 }

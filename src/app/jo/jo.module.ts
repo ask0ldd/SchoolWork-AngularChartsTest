@@ -5,6 +5,7 @@ import { CountriesMedalsPiechartComponent } from './countries-medals-piechart/co
 import { CountryStatsLinechartComponent } from './country-stats-linechart/country-stats-linechart.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 const joRoutes: Routes = [
   {path: '', component: CountriesMedalsPiechartComponent},
@@ -20,6 +21,7 @@ const joRoutes: Routes = [
     RouterModule.forChild(joRoutes),
     CommonModule,
     HttpClientModule,
+    NgxChartsModule,
   ],
   providers: [
     JoMockapiService

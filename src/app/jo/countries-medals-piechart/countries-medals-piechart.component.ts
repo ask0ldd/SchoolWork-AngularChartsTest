@@ -12,6 +12,7 @@ export class CountriesMedalsPiechartComponent implements OnInit {
 
   // datas : WritableSignal<ICountryJOStats[] | null>
   processedValue : any
+  pieDatas : {name : string, value : number} [] | undefined
 
   constructor(private JOService : JoMockapiService){ 
     // this.datas = this.JOService.CJS
@@ -24,8 +25,9 @@ export class CountriesMedalsPiechartComponent implements OnInit {
     this.JOService.getCountryMedals('france').subscribe(medals => console.log('medals',medals))
     this.JOService.getCountryMedals2()*/
 
-    console.log (await this.JOService.getMedals("france"))
-    this.processedValue = await this.JOService.getMedals("france")
+    console.log (await this.JOService.getCountryMedals("france"))
+    this.processedValue = await this.JOService.getCountryMedals("france")
+    this.pieDatas = await this.JOService.pieDatas()
   }
 
 }
