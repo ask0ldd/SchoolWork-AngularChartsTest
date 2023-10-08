@@ -1,16 +1,19 @@
-import { Component, OnInit, WritableSignal } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation, WritableSignal } from '@angular/core';
 import { JoMockapiService } from '../jo-mockapi.service';
 import { ICountryJOStats } from 'src/app/models/countryJOStats';
 import { Observable, of } from 'rxjs';
-import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { Color, ScaleType, TooltipContentComponent } from '@swimlane/ngx-charts';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-countries-medals-piechart',
   templateUrl: './countries-medals-piechart.component.html',
-  styleUrls: ['./countries-medals-piechart.component.css']
+  styleUrls: ['./countries-medals-piechart.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CountriesMedalsPiechartComponent implements OnInit {
+
+  // @ViewChild('customTooltip', { static: true }) customTooltip: TemplateRef<any>
 
   // datas : WritableSignal<ICountryJOStats[] | null>
   processedValue : any
@@ -42,6 +45,11 @@ export class CountriesMedalsPiechartComponent implements OnInit {
   setLabelFormatting(label : string): string {
     return `${label}`
   }
+
+  /*setTooltipText(datas : any) : string{
+    console.log(datas)
+    return `<div>${datas.data.name} * ${datas.data.value}</div>`
+  }*/
 
   onSelect(event : any){
     // event obj : {name: 'Italy', value: 96, label: 'Italy'}

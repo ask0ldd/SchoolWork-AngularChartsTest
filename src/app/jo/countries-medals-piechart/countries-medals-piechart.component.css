@@ -1,3 +1,13 @@
-text.pie-label {
-  font-size: 20px;
+.ngx-charts-tooltip-content.type-tooltip {
+  background-color: #04838f !important;
+  padding: 1rem 2rem !important;
+  font-size: 16px !important;
+}
+
+.tooltip-caret {
+  border-top-color: #04838f !important;
+}
+
+.pie-label {
+  font-size: 20px !important;
 }
