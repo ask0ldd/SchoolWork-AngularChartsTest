@@ -1,4 +1,6 @@
 <p>countries-medals-piechart works!</p>
 <div>
-{{datas() | json}}
+<div *ngIf="processedValue">
+    {{processedValue.country}}
+</div>
 </div>

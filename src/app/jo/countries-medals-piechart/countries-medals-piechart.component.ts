@@ -1,6 +1,7 @@
 import { Component, OnInit, WritableSignal } from '@angular/core';
 import { JoMockapiService } from '../jo-mockapi.service';
 import { ICountryJOStats } from 'src/app/models/countryJOStats';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-countries-medals-piechart',
@@ -9,17 +10,22 @@ import { ICountryJOStats } from 'src/app/models/countryJOStats';
 })
 export class CountriesMedalsPiechartComponent implements OnInit {
 
-  datas : WritableSignal<ICountryJOStats[] | null>
+  // datas : WritableSignal<ICountryJOStats[] | null>
+  processedValue : any
 
   constructor(private JOService : JoMockapiService){ 
-    this.datas = this.JOService.CJS
+    // this.datas = this.JOService.CJS
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<any> {
 
-    console.log(JSON.stringify(this.JOService.CJS()))
+    /*console.log(JSON.stringify(this.JOService.CJS()))
 
     this.JOService.getCountryMedals('france').subscribe(medals => console.log('medals',medals))
+    this.JOService.getCountryMedals2()*/
+
+    console.log (await this.JOService.getMedals("france"))
+    this.processedValue = await this.JOService.getMedals("france")
   }
 
 }
