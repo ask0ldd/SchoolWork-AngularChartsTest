@@ -15,9 +15,9 @@ body {
   -webkit-font-smoothing: antialiased;
   font-family: "Montserrat", sans-serif;
   color: #000000ff;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 input,

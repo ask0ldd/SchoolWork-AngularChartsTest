@@ -1,13 +1,24 @@
 .ngx-charts-tooltip-content.type-tooltip {
   background-color: #04838f !important;
-  padding: 1rem 2rem !important;
+  padding: 0.5rem 1.5rem !important;
   font-size: 16px !important;
 }
 
 .tooltip-caret {
-  border-top-color: #04838f !important;
+  border-top: 15px solid #04838f !important;
+  border-left: 15px solid transparent !important;
+  border-right: 15px solid transparent !important;
+  width: 2rem !important;
 }
 
 .pie-label {
   font-size: 20px !important;
+}
+
+.mainpie {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }

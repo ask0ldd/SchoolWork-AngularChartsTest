@@ -26,9 +26,7 @@ export class CountriesMedalsPiechartComponent implements OnInit {
     name: 'Pie Scheme',
   }
 
-  constructor(private JOService : JoMockapiService, private router : Router, private route : ActivatedRoute,){ 
-    // this.datas = this.JOService.CJS
-  }
+  constructor(private JOService : JoMockapiService, private router : Router, private route : ActivatedRoute,){ }
 
   async ngOnInit(): Promise<any> {
 
@@ -45,11 +43,6 @@ export class CountriesMedalsPiechartComponent implements OnInit {
   setLabelFormatting(label : string): string {
     return `${label}`
   }
-
-  /*setTooltipText(datas : any) : string{
-    console.log(datas)
-    return `<div>${datas.data.name} * ${datas.data.value}</div>`
-  }*/
 
   onSelect(event : any){
     // event obj : {name: 'Italy', value: 96, label: 'Italy'}
