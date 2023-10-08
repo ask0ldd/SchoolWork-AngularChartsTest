@@ -20,7 +20,7 @@ const joRoutes: Routes = [
   imports: [
     RouterModule.forChild(joRoutes),
     CommonModule,
-    HttpClientModule,
+    /*HttpClientModule,*/
     NgxChartsModule,
   ],
   providers: [

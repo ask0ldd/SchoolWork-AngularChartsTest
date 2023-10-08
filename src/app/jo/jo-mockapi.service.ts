@@ -15,7 +15,11 @@ export class JoMockapiService {
   }
 
   async getJODatas(){
-    return (await fetch('../assets/olympic.json')).json()
+    try{
+      return (await fetch('../assets/olympic.json')).json()
+    }catch(error){
+      console.error(error)
+    }
   }
 
   async getCountryMedals(country : string){
