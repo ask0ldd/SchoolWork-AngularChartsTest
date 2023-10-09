@@ -31,6 +31,17 @@ export class JoMockapiService {
     return (await this.JODatas).map((countryDatas : ICountryJOStats) => ({name : countryDatas.country, value : countryDatas.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0)}))
   }
 
+  async nJOs(){
+    const JODatas = await this.JODatas
+    let eventsDates : number[] = []
+    JODatas.forEach(countryStats => {
+      countryStats.participations.forEach(participation => {
+        if(!eventsDates.includes(participation.year)) eventsDates.push(participation.year)
+      })
+    })
+    console.log(eventsDates.length)
+  }
+
 }
 
 /*
