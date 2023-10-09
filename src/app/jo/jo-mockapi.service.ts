@@ -31,7 +31,7 @@ export class JoMockapiService {
     return (await this.JODatas).map((countryDatas : ICountryJOStats) => ({name : countryDatas.country, value : countryDatas.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0)}))
   }
 
-  async nJOs(){
+  async getNumberOfJOs() : Promise<number>{
     const JODatas = await this.JODatas
     let eventsDates : number[] = []
     JODatas.forEach(countryStats => {
@@ -39,7 +39,7 @@ export class JoMockapiService {
         if(!eventsDates.includes(participation.year)) eventsDates.push(participation.year)
       })
     })
-    console.log(eventsDates.length)
+    return eventsDates.length
   }
 
 }

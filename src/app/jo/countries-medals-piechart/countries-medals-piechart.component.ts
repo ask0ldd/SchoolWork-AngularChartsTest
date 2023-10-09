@@ -18,6 +18,7 @@ export class CountriesMedalsPiechartComponent implements OnInit {
   // datas : WritableSignal<ICountryJOStats[] | null>
   processedValue : any
   pieDatas : {name : string, value : number} []
+  numberOfJOs : number
 
   colorScheme : Color = {
     domain:['#956065', '#793d52', '#89a1db', '#9780a1', '#bfe0f1'],
@@ -38,6 +39,7 @@ export class CountriesMedalsPiechartComponent implements OnInit {
     console.log (await this.JOService.getCountryMedals("france"))
     this.processedValue = await this.JOService.getCountryMedals("france")
     this.pieDatas = await this.JOService.pieDatas()
+    this.numberOfJOs = await this.JOService.getNumberOfJOs()
   }
 
   setLabelFormatting(label : string): string {
