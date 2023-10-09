@@ -29,7 +29,8 @@ export class JoMockapiService {
 
   async getLineChartDatas(country : string){
     const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
-    return [{name: country, series: selectedCountryDatas?.participations.map(participation => ({name : participation.year.toString(), value : participation.medalsCount}))}]
+    if(selectedCountryDatas) return [{name: country, series: selectedCountryDatas.participations.map(participation => ({name : participation.year.toString(), value : participation.medalsCount}))}]
+    return undefined
   }
 
   async getPieDatas() : Promise<{name : string, value : number} []>{
