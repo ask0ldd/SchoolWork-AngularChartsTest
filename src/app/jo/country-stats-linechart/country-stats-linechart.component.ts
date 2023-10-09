@@ -22,6 +22,9 @@ export class CountryStatsLinechartComponent implements OnInit {
     }
 
     this.linechartDatas = await this.joService.getLineChartDatas(this.countryName)
+    /*this.linechartDatas.map(
+      (performance : any) => performance.name  // needs to be improved
+    )*/
 
   }
 }
