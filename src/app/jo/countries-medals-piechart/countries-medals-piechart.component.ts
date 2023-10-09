@@ -29,7 +29,7 @@ export class CountriesMedalsPiechartComponent implements OnInit {
 
   constructor(private JOService : JoMockapiService, private router : Router, private route : ActivatedRoute,){ }
 
-  async ngOnInit(): Promise<any> {
+  async ngOnInit(): Promise<void> {
 
     /*console.log(JSON.stringify(this.JOService.CJS()))
 

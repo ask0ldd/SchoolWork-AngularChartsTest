@@ -1,4 +1,5 @@
-<p>country-stats-linechart works!</p>
-<ngx-charts-line-chart>
-    
-</ngx-charts-line-chart>
+<div *ngIf="linechartDatas">
+    <ngx-charts-line-chart [results]="linechartDatas">
+
+    </ngx-charts-line-chart>
+</div>
