@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { JoMockapiService } from '../jo-mockapi.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-country-stats-linechart',
   templateUrl: './country-stats-linechart.component.html',
-  styleUrls: ['./country-stats-linechart.component.css']
+  styleUrls: ['./country-stats-linechart.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CountryStatsLinechartComponent implements OnInit {
 
