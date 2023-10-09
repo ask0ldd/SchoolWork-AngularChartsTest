@@ -22,10 +22,15 @@ export class JoMockapiService {
     }
   }
 
-  /*async getCountryMedals(country : string){
+  async getCountryMedals(country : string){
     const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
     return selectedCountryDatas?.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0)
-  }*/
+  }
+
+  async getCountryAthletes(country : string){
+    const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
+    return selectedCountryDatas?.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.athleteCount, 0)
+  }
 
   async getLineChartDatas(country : string){
     const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
@@ -49,37 +54,3 @@ export class JoMockapiService {
   }
 
 }
-
-/*
-  // countriesJOStats$ : Observable<ICountryJOStats[] | any> // $ = observable
-  CJS : WritableSignal<ICountryJOStats[] | [] > = signal([])
-
-  CJS2 : Promise<ICountryJOStats[]> | any
-
-  // use dataresolver
-  constructor(private http: HttpClient) {
-    // this.countriesJOStats$ = this.http.get<ICountryJOStats[]>('../assets/olympic.json')
-    this.http.get<ICountryJOStats[]>('../assets/olympic.json').subscribe(stats => this.CJS.set(stats))
-    fetch('../assets/olympic.json').then(response => {this.CJS2 = response.json(); return response.json();}).then(datas => this.CJS2 = datas)
-  }
-
-  getCountryMedals(country : string) : Observable<number | undefined>{
-    if(this.CJS().length > 0 ) {
-      const countryStats = this.CJS().find(stat => stat.country === country)
-      return of(countryStats?.participations.reduce((accumulator : number, participation : any) => accumulator + participation.medalsCount, 0))
-    }
-    let medals
-    this.http.get<ICountryJOStats[]>('../assets/olympic.json').subscribe(stats => {
-      const countryStats = stats.find(stat => stat.country.toLowerCase() === country)
-      medals = countryStats?.participations.reduce((accumulator : number, participation : any) => accumulator + participation.medalsCount, 0)
-      console.log(medals)
-    })
-
-    return of(medals)
-  }
-
-  async getCountryMedals2(){
-      // if(typeof(this.CJS2) )
-  }
-
-}*/
