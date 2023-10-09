@@ -36,9 +36,9 @@ export class CountriesMedalsPiechartComponent implements OnInit {
     this.JOService.getCountryMedals('france').subscribe(medals => console.log('medals',medals))
     this.JOService.getCountryMedals2()*/
 
-    console.log (await this.JOService.getCountryMedals("france"))
-    this.processedValue = await this.JOService.getCountryMedals("france")
-    this.pieDatas = await this.JOService.pieDatas()
+    /*console.log (await this.JOService.getCountryMedals("france"))
+    this.processedValue = await this.JOService.getCountryMedals("france")*/
+    this.pieDatas = await this.JOService.getPieDatas()
     this.numberOfJOs = await this.JOService.getNumberOfJOs()
   }
 

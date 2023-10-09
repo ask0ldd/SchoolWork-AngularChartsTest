@@ -11,10 +11,10 @@ export class JoMockapiService {
   JODatas : Promise<ICountryJOStats[]>
 
   constructor(/*private http: HttpClient*/) {
-    this.JODatas = this.getJODatas()
+    this.JODatas = this.retrieveJODatas()
   }
 
-  async getJODatas(){
+  async retrieveJODatas(){
     try{
       return (await fetch('../assets/olympic.json')).json()
     }catch(error){
@@ -22,12 +22,17 @@ export class JoMockapiService {
     }
   }
 
-  async getCountryMedals(country : string){
+  /*async getCountryMedals(country : string){
     const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
     return selectedCountryDatas?.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0)
+  }*/
+
+  async getLineChartDatas(country : string){
+    const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
+    return selectedCountryDatas?.participations
   }
 
-  async pieDatas(){
+  async getPieDatas() : Promise<{name : string, value : number} []>{
     return (await this.JODatas).map((countryDatas : ICountryJOStats) => ({name : countryDatas.country, value : countryDatas.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0)}))
   }
 
