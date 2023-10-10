@@ -1,11 +1,18 @@
 <main class="mainpie" *ngIf="pieDatas">
-    <div>
-        <p>Number of JOs</p>
-        <p>{{numberOfJOs}}</p>
-    </div>
-    <div>
-        <p>Number of Countries</p>
-        <p>{{pieDatas.length}}</p>
+    <div class="statsContainer">
+        <h1 class="piechartTitle">
+            Medals per Country
+        </h1>
+        <div>
+            <div>
+                <p>Number of JOs</p>
+                <p>{{numberOfJOs}}</p>
+            </div>
+            <div>
+                <p>Number of Countries</p>
+                <p>{{pieDatas.length}}</p>
+            </div>
+        </div>
     </div>
     <ngx-charts-pie-chart [results]="pieDatas" [labels]="true" [scheme]="colorScheme" [labelFormatting]="setLabelFormatting" [view]="[840,400]" (select)="onSelect($event)">
         <ng-template #tooltipTemplate let-model="model">
