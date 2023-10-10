@@ -15,6 +15,7 @@ export class CountryStatsLinechartComponent implements OnInit {
   YticksList : number[] = [0, 5 , 10, 15, 20]
   maxMedals : number
   totalMedals : number
+  totalAthletes : number | undefined
   
   constructor(private router:Router, private route: ActivatedRoute, private joService : JoMockapiService){ }
 
@@ -37,5 +38,8 @@ export class CountryStatsLinechartComponent implements OnInit {
 
       this.totalMedals = this.linechartDatas[0].series.reduce((acc, serie) => acc + serie.value, 0)
     }
+
+    this.totalAthletes = await this.joService.getTotalAthletesFor(this.countryName)
+
   }
 }
