@@ -1,10 +1,20 @@
 <main class="mainLineChart" *ngIf="linechartDatas">
-    <div>
-        <p>aaaaaaaaaaaaaaaaa</p>
-        <p>aaaaaaaaaaaaaaaaa</p>
-        <p>aaaaaaaaaaaaaaaaa</p>
-        <p>aaaaaaaaaaaaaaaaa</p>
-        
+    <div class="titlenStatsContainer">
+        <h1>{{countryName}}</h1>
+        <div class="statsCells">
+            <div>
+                <p>Number</p>
+                <p>{{linechartDatas[0].series.length}}</p>
+            </div>
+            <div>
+                <p>Number</p>
+                <p>0</p>
+            </div>
+            <div>
+                <p>Number</p>
+                <p>0</p>
+            </div>
+        </div>
     </div>
     <ngx-charts-line-chart [results]="linechartDatas" [xAxis]="true" [yAxis]="true" [showGridLines]="true" [view]="[840,400]" [yAxisTicks]="YticksList">
 
