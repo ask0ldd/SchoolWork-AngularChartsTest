@@ -14,6 +14,7 @@ export class CountryStatsLinechartComponent implements OnInit {
   linechartDatas : { name: string, series: { name: string, value: number }[] }[] | undefined
   YticksList : number[] = [0, 5 , 10, 15, 20]
   maxMedals : number
+  totalMedals : number
   
   constructor(private router:Router, private route: ActivatedRoute, private joService : JoMockapiService){ }
 
@@ -33,6 +34,8 @@ export class CountryStatsLinechartComponent implements OnInit {
       this.maxMedals = Math.max(...medalsList)
       if(this.maxMedals > 25) this.YticksList = [0, 10, 20, 30, 40]
       if(this.maxMedals > 50) this.YticksList = [0, 20, 40, 60, 80, 100, 120]
+
+      this.totalMedals = this.linechartDatas[0].series.reduce((acc, serie) => acc + serie.value, 0)
     }
   }
 }
