@@ -34,7 +34,7 @@
   background-color: #04838f;
   color: #ffffffff;
   border-radius: 6px;
-  padding: 0.5rem 2rem;
+  padding: 0.75rem 2rem;
   font-weight: 500;
   flex-grow: 0;
   display: flex;
@@ -51,16 +51,21 @@
 .statsCells div {
   border-radius: 6px;
   border: 3px solid #04838f;
-  width: 240px;
+  width: 320px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0.5rem 0;
+  padding: 1rem 0;
   box-shadow: 0 8px 16px #04838f33;
+  font-size: 20px;
 }
 
 .statsCells div p {
   display: flex;
   justify-content: center;
+}
+
+.statsCells p.stat {
+  font-weight: 600;
 }

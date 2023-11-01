@@ -1,18 +1,18 @@
 <main class="mainLineChart" *ngIf="linechartDatas">
     <div class="titlenStatsContainer">
-        <h1>{{countryName}}</h1>
+        <h1>{{countryName}} | dont forget back button</h1>
         <div class="statsCells">
             <div>
                 <p>Number of entries</p>
-                <p>{{linechartDatas[0].series.length}}</p>
+                <p class="stat">{{linechartDatas[0].series.length}}</p>
             </div>
             <div>
                 <p>Total number of medals</p>
-                <p>{{totalMedals}}</p>
+                <p class="stat">{{totalMedals}}</p>
             </div>
             <div>
                 <p>Total number of athletes</p>
-                <p>{{totalAthletes}}</p>
+                <p class="stat">{{totalAthletes}}</p>
             </div>
         </div>
     </div>
