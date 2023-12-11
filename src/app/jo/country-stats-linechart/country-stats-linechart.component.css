@@ -30,8 +30,17 @@
   stroke-width: 1px;
 }
 
-.mainLineChart .tick title {
-  font-size: 20px;
+.mainLineChart .tick text {
+  font-size: 16px !important;
+}
+
+.mainLineChart .y.axis text {
+  font-size: 16px;
+}
+
+.mainLineChart .line-chart .x.axis text:not(.tick text) {
+  font-size: 36px !important;
+  transform: translateY(32px) !important;
 }
 
 .titlenStatsContainer {
