@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, OnInit, TemplateRef, ViewChild, ViewEncapsulation, WritableSignal } from '@angular/core';
 import { JoMockapiService } from '../jo-mockapi.service';
 import { ICountryJOStats } from 'src/app/models/countryJOStats';
 import { Observable, of } from 'rxjs';
@@ -46,7 +46,7 @@ export class CountriesMedalsPiechartComponent implements OnInit {
     return `${label}`
   }
 
-  onSelect(event : any){
+  onSelect(event : EventEmitter<any>){
     // event obj : {name: 'Italy', value: 96, label: 'Italy'}
     console.log(event)
     if(event.name != null) {

@@ -16,7 +16,12 @@
             </div>
         </div>
     </div>
-    <ngx-charts-line-chart [results]="linechartDatas" [xAxis]="true" [yAxis]="true" [showGridLines]="true" [view]="[840,400]" [yAxisTicks]="YticksList">
+    <ngx-charts-line-chart [trimYAxisTicks]="true" [results]="linechartDatas" 
+    [xAxis]="true" [autoScale]="false" [yAxis]="true" [showGridLines]="true" 
+    [view]="[840,400]"
+    [yScaleMin]="minYaxis" [yScaleMax]="maxYaxis"
+    [yAxisTicks]="YticksList"
+    >
 
     </ngx-charts-line-chart>
 </main>

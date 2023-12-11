@@ -22,6 +22,18 @@
   align-items: center;
 }
 
+.mainLineChart .line-series path {
+  stroke-width: 3px;
+}
+
+.mainLineChart .axis line {
+  stroke-width: 1px;
+}
+
+.mainLineChart .tick title {
+  font-size: 20px;
+}
+
 .titlenStatsContainer {
   display: flex;
   flex-direction: column;
