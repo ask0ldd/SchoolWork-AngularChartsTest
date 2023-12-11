@@ -67,6 +67,11 @@
 .statsCells {
   display: flex;
   column-gap: 2rem;
+  row-gap: 2rem;
+  @media (max-width: 1250px) {
+    flex-direction: column;
+    width: 100%;
+  }
 }
 
 .statsCells div {
@@ -80,6 +85,11 @@
   padding: 1rem 0;
   box-shadow: 0 8px 16px #04838f33;
   font-size: 20px;
+  @media (max-width: 1250px) {
+    width: 100%;
+    flex-grow: 1;
+    max-width: 100%;
+  }
 }
 
 .statsCells div p {
