@@ -1,6 +1,6 @@
 import { Injectable, WritableSignal, signal } from '@angular/core';
 import { ICountryJOStats, IEventStats } from '../models/countryJOStats';
-import { Observable, of } from 'rxjs';
+import { Observable, of, reduce, find, map } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -9,14 +9,35 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 export class JoMockapiService {
 
   JODatas : Promise<ICountryJOStats[]>
+  datasUrl = '../assets/olympic.json'
 
-  constructor(/*private http: HttpClient*/) {
+  constructor(private _http: HttpClient) {
     this.JODatas = this.retrieveJODatas()
   }
 
+  // Obs
+
+  getJODatasObs(): Observable<ICountryJOStats[]>{
+    return this._http.get<ICountryJOStats[]>(this.datasUrl) // catch error?
+  }
+
+  // using find - rxjs operator - would allow me to ignore emissions not matching my condition, 
+  // reduce - rxjs operator - would allow me to work on successive emissions
+  // it wouldn't allow me to find the first ICountryJOStats matching it
+  getCountryMedalsObs(country : string) : Observable<number | undefined>{
+    return this._http.get<ICountryJOStats[]>(this.datasUrl).pipe(
+        map((datas : ICountryJOStats[]) => datas
+        .find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)?.participations
+        .reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0)
+        )
+    )
+  }
+
+  // Non Obs
+
   async retrieveJODatas(){
     try{
-      return (await fetch('../assets/olympic.json')).json()
+      return (await fetch(this.datasUrl)).json()
     }catch(error){
       console.error(error)
     }

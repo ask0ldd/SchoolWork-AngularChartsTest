@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Signal, ViewEncapsulation, WritableSignal, signal } from '@angular/core';
 import { JoMockapiService } from '../jo-mockapi.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-country-stats-linechart',
@@ -17,10 +18,12 @@ export class CountryStatsLinechartComponent implements OnInit {
   minYaxis : number
   maxYaxis : number
   view : [number, number] = [800, 400]
-  linechartDatas : { name: string, series: { name: string, value: number }[] }[] | null
+  linechartDatas : ILineChartsDatasRow[] | null
   // lineChartDatasSignal : WritableSignal<ILineChartsDatasRow[] | null> = signal(null)
   totalAthletes : number | null
   // totalAthletesSignal : WritableSignal<number | null> = signal(null)
+
+  totalMedalsObs : Observable<number | undefined>
   
   constructor(private router:Router, private route: ActivatedRoute, private joService : JoMockapiService){ }
 
@@ -57,6 +60,14 @@ export class CountryStatsLinechartComponent implements OnInit {
       }
       console.log(this.YticksList)
     }
+
+    // obs
+
+    /*this.joService.getCountryMedalsObs(this.countryName).subscribe(
+      value => this.totalMedalsObs = value
+    )*/
+
+    this.totalMedalsObs = this.joService.getCountryMedalsObs(this.countryName)
   }
 
   onResize(event : UIEvent) : [number, number] { // show not only take into account resize but initialsize too
