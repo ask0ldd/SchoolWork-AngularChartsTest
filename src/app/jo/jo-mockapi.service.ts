@@ -22,7 +22,7 @@ export class JoMockapiService {
     }
   }
 
-  async getCountryMedals(country : string){
+  async getCountryMedalsFor(country : string){
     const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
     return selectedCountryDatas?.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0)
   }
@@ -32,7 +32,7 @@ export class JoMockapiService {
     return selectedCountryDatas?.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.athleteCount, 0)
   }
 
-  async getLineChartDatas(country : string){
+  async getLineChartDatasFor(country : string){
     const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
     if(selectedCountryDatas) return [{name: country, series: selectedCountryDatas.participations.map(participation => ({name : participation.year.toString(), value : participation.medalsCount}))}]
     return undefined

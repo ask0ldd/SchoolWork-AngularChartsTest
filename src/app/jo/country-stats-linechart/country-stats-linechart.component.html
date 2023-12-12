@@ -1,4 +1,4 @@
-<main class="mainLineChart" *ngIf="linechartDatas">
+<main class="mainLineChart" *ngIf="linechartDatas" (window:resize)="onResize($event)">
     <div class="titlenStatsContainer">
         <h1>{{countryName}} | dont forget back button</h1>
         <div class="statsCells">
@@ -18,7 +18,7 @@
     </div>
     <ngx-charts-line-chart [trimXAxisTicks]="true" [trimYAxisTicks]="true" [results]="linechartDatas" 
     [xAxis]="true" [autoScale]="false" [yAxis]="true" [showGridLines]="true" 
-    [view]="[840,400]"
+    [view]="view"
     [yScaleMin]="minYaxis" [yScaleMax]="maxYaxis"
     [yAxisTicks]="YticksList" [xAxisLabel]="'Dates'" [showXAxisLabel]="true">
     </ngx-charts-line-chart>

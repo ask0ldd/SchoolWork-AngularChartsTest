@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnInit, ViewEncapsulation } from '@angular/core';
 import { JoMockapiService } from '../jo-mockapi.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,6 +18,7 @@ export class CountryStatsLinechartComponent implements OnInit {
   totalAthletes : number | undefined
   minYaxis : number
   maxYaxis : number
+  view : [number, number] = [800, 400]
   
   constructor(private router:Router, private route: ActivatedRoute, private joService : JoMockapiService){ }
 
@@ -28,7 +29,7 @@ export class CountryStatsLinechartComponent implements OnInit {
       return
     }
 
-    this.linechartDatas = await this.joService.getLineChartDatas(this.countryName)
+    this.linechartDatas = await this.joService.getLineChartDatasFor(this.countryName)
     /*this.linechartDatas.map(
       (performance : any) => performance.name  // needs to be improved
     )*/
@@ -62,6 +63,14 @@ export class CountryStatsLinechartComponent implements OnInit {
       }
       console.log(this.YticksList)
     }
-
   }
+
+  onResize(event : UIEvent) { // show not only take into account resize but initialsize too
+    const windowWidth = (event.target as Window).innerWidth
+    if(windowWidth <= 420) return this.view = [300, 300]
+    if(windowWidth <= 600) return this.view = [400, 300]
+    if(windowWidth <= 1200) return this.view = [600, 400]
+    return this.view = [800, 400]
+  }
+
 }
