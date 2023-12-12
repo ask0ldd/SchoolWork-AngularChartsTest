@@ -25,6 +25,7 @@ export class CountryStatsLinechartComponent implements OnInit {
 
   totalMedals$ : Observable<number>
   totalAthletes$ : Observable<number>
+  linechartDatas$: Observable<{ name: string; series: { name: string; value: number; }[]}[]>
   
   constructor(private router:Router, private route: ActivatedRoute, private joService : JoMockapiService){ }
 
@@ -70,6 +71,7 @@ export class CountryStatsLinechartComponent implements OnInit {
 
     this.totalMedals$ = this.joService.getCountryMedals$(this.countryName)
     this.totalAthletes$ = this.joService.getCountryTotalAthletes$(this.countryName)
+    this.linechartDatas$ = this.joService.getCountryLineChartDatas$(this.countryName)
   }
 
   onResize(event : UIEvent) : [number, number] { // show not only take into account resize but initialsize too

@@ -47,6 +47,16 @@ export class JoMockapiService {
     )
   }
 
+  getCountryLineChartDatas$(country : string) : Observable<{ name: string; series: { name: string; value: number; }[]}[]>{
+    return this.retrieveJODatas$().pipe(
+        map((datas : ICountryJOStats[]) => {
+          const selectedCountryDatas = datas.find((datas) => datas.country.toLowerCase() === country)
+          if(selectedCountryDatas) return [{name: country, series: selectedCountryDatas?.participations.map(participation => ({name : participation.year.toString(), value : participation.medalsCount}))}]
+          return [{name : country, series : [{name : '', value : 0 }]}]
+        })
+    )
+  }
+
   // Non Obs
 
   async retrieveJODatas(){
