@@ -1,6 +1,6 @@
 import { Injectable, WritableSignal, signal } from '@angular/core';
 import { ICountryJOStats, IEventStats } from '../models/countryJOStats';
-import { Observable, of, reduce, find, map } from 'rxjs';
+import { Observable, of, reduce, find, map, catchError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -17,18 +17,32 @@ export class JoMockapiService {
 
   // Obs
 
-  getJODatasObs(): Observable<ICountryJOStats[]>{
-    return this._http.get<ICountryJOStats[]>(this.datasUrl) // catch error?
+  retrieveJODatas$(): Observable<ICountryJOStats[]>{
+    return this._http.get<ICountryJOStats[]>(this.datasUrl).pipe( // catch error?
+      catchError((error, caught) => {
+        console.error(error);
+        return caught;
+      })
+    )
   }
 
   // using find - rxjs operator - would allow me to ignore emissions not matching my condition, 
   // reduce - rxjs operator - would allow me to work on successive emissions
   // it wouldn't allow me to find the first ICountryJOStats matching it
-  getCountryMedalsObs(country : string) : Observable<number | undefined>{
-    return this._http.get<ICountryJOStats[]>(this.datasUrl).pipe(
+  getCountryMedals$(country : string) : Observable<number>{
+    return this.retrieveJODatas$().pipe( // !!! catch error
         map((datas : ICountryJOStats[]) => datas
         .find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)?.participations
-        .reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0)
+        .reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0) || 0
+        )
+    )
+  }
+
+  getCountryTotalAthletes$(country : string) : Observable<number>{
+    return this.retrieveJODatas$().pipe(
+        map((datas : ICountryJOStats[]) => datas
+        .find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)?.participations
+        .reduce((accumulator : number, participation : IEventStats) => accumulator + participation.athleteCount, 0) || 0
         )
     )
   }
