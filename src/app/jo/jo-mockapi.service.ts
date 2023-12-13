@@ -16,7 +16,7 @@ export class JoMockapiService {
     this.JODatas = this.retrieveJODatas()
   }
 
-  // Obs
+  // ********* Obs
 
   retrieveJODatas$(): Observable<ICountryJOStats[]>{
     return this._http.get<ICountryJOStats[]>(this.datasUrl).pipe( // catch error?
@@ -58,7 +58,15 @@ export class JoMockapiService {
     )
   }
 
-  // Non Obs
+  getPieChartDatas$(){
+    return this.retrieveJODatas$().pipe(
+      map((datas : ICountryJOStats[]) => datas
+        .map((countryDatas : ICountryJOStats) => ({name : countryDatas.country, value : countryDatas.participations.reduce((accumulator : number, participation : ISingleEventStats) => accumulator + participation.medalsCount, 0)}))
+      )
+    )
+  }
+
+  // ********* Non Obs
 
   async retrieveJODatas(){
     try{

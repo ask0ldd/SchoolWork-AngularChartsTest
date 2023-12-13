@@ -19,6 +19,7 @@ export class CountriesMedalsPiechartComponent implements OnInit {
   processedValue : any
   pieDatas : {name : string, value : number} []
   numberOfJOs : number
+  pieDatas$ : Observable<{name : string, value : number} []>
 
   colorScheme : Color = {
     domain:['#956065', '#793d52', '#89a1db', '#9780a1', '#bfe0f1'],
@@ -30,8 +31,12 @@ export class CountriesMedalsPiechartComponent implements OnInit {
   constructor(private JOService : JoMockapiService, private router : Router, private route : ActivatedRoute,){ }
 
   async ngOnInit(): Promise<void> {
+    // non obs
     this.pieDatas = await this.JOService.getPieDatas()
     this.numberOfJOs = await this.JOService.getNumberOfJOs()
+
+    // obs
+    this.pieDatas$ = this.JOService.getPieChartDatas$()
   }
 
   setLabelFormatting(label : string): string {

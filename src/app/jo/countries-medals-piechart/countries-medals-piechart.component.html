@@ -1,4 +1,4 @@
-<main class="mainpie" *ngIf="pieDatas">
+<main class="mainpie" *ngIf="pieDatas$ | async as pieDatas">
     <div class="statsnTitleContainer">
         <h1 class="piechartTitle">
             Medals per Country
