@@ -1,7 +1,8 @@
 import { Injectable, WritableSignal, signal } from '@angular/core';
-import { ICountryJOStats, IEventStats } from '../models/countryJOStats';
+import { ICountryJOStats } from '../models/countryJOStats';
 import { Observable, of, reduce, find, map, catchError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ISingleEventStats } from '../models/singleEventState';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class JoMockapiService {
     return this.retrieveJODatas$().pipe( // !!! catch error
         map((datas : ICountryJOStats[]) => datas
         .find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)?.participations
-        .reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0) || 0
+        .reduce((accumulator : number, participation : ISingleEventStats) => accumulator + participation.medalsCount, 0) || 0
         )
     )
   }
@@ -42,12 +43,12 @@ export class JoMockapiService {
     return this.retrieveJODatas$().pipe(
         map((datas : ICountryJOStats[]) => datas
         .find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)?.participations
-        .reduce((accumulator : number, participation : IEventStats) => accumulator + participation.athleteCount, 0) || 0
+        .reduce((accumulator : number, participation : ISingleEventStats) => accumulator + participation.athleteCount, 0) || 0
         )
     )
   }
 
-  getCountryLineChartDatas$(country : string) : Observable<{ name: string; series: { name: string; value: number; }[]}[]>{
+  getCountryLineChartDatas$(country : string) : Observable<ILineChartsDatasRow[]>{
     return this.retrieveJODatas$().pipe(
         map((datas : ICountryJOStats[]) => {
           const selectedCountryDatas = datas.find((datas) => datas.country.toLowerCase() === country)
@@ -69,23 +70,23 @@ export class JoMockapiService {
 
   async getCountryMedalsFor(country : string){
     const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
-    return selectedCountryDatas?.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0)
+    return selectedCountryDatas?.participations.reduce((accumulator : number, participation : ISingleEventStats) => accumulator + participation.medalsCount, 0)
   }
 
   async getTotalAthletesFor(country : string){
     const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
-    if(selectedCountryDatas) return selectedCountryDatas?.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.athleteCount, 0)
+    if(selectedCountryDatas) return selectedCountryDatas?.participations.reduce((accumulator : number, participation : ISingleEventStats) => accumulator + participation.athleteCount, 0)
     return null
   }
 
-  async getLineChartDatasFor(country : string){
+  async getLineChartDatasFor(country : string) : Promise<ILineChartsDatasRow[]>{
     const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
     if(selectedCountryDatas) return [{name: country, series: selectedCountryDatas.participations.map(participation => ({name : participation.year.toString(), value : participation.medalsCount}))}]
-    return null
+    return []
   }
 
   async getPieDatas() : Promise<{name : string, value : number} []>{
-    return (await this.JODatas).map((countryDatas : ICountryJOStats) => ({name : countryDatas.country, value : countryDatas.participations.reduce((accumulator : number, participation : IEventStats) => accumulator + participation.medalsCount, 0)}))
+    return (await this.JODatas).map((countryDatas : ICountryJOStats) => ({name : countryDatas.country, value : countryDatas.participations.reduce((accumulator : number, participation : ISingleEventStats) => accumulator + participation.medalsCount, 0)}))
   }
 
   async getNumberOfJOs() : Promise<number>{
@@ -99,4 +100,10 @@ export class JoMockapiService {
     return eventsDates.length
   }
 
+}
+
+// name and series.name required by ngx charts
+export interface ILineChartsDatasRow{
+  name: string
+  series: { name: string, value: number }[]
 }

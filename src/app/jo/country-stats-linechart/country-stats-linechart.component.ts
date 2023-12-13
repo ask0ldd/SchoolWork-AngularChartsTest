@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Signal, ViewEncapsulation, WritableSignal, signal } from '@angular/core';
-import { JoMockapiService } from '../jo-mockapi.service';
+import { ILineChartsDatasRow, JoMockapiService } from '../jo-mockapi.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -25,7 +25,7 @@ export class CountryStatsLinechartComponent implements OnInit {
 
   totalMedals$ : Observable<number>
   totalAthletes$ : Observable<number>
-  linechartDatas$: Observable<{ name: string; series: { name: string; value: number; }[]}[]>
+  linechartDatas$: Observable<ILineChartsDatasRow[]>
   
   constructor(private router:Router, private route: ActivatedRoute, private joService : JoMockapiService){ }
 
@@ -42,7 +42,7 @@ export class CountryStatsLinechartComponent implements OnInit {
     this.totalAthletes = await this.joService.getTotalAthletesFor(this.countryName)
     // this.totalAthletesSignal.set(await this.joService.getTotalAthletesFor(this.countryName))
 
-    if(this.linechartDatas != null){
+    if(this.linechartDatas.length > 0){
       const medalsList = this.linechartDatas[0].series?.map(serie => serie.value)
       this.minYaxis = Math.floor((Math.min(...medalsList) / 10)) * 10
       if(this.minYaxis < 0) this.minYaxis = 0
@@ -72,6 +72,8 @@ export class CountryStatsLinechartComponent implements OnInit {
     this.totalMedals$ = this.joService.getCountryMedals$(this.countryName)
     this.totalAthletes$ = this.joService.getCountryTotalAthletes$(this.countryName)
     this.linechartDatas$ = this.joService.getCountryLineChartDatas$(this.countryName)
+
+    // !!!! needs to compute minyaxis maxyaxis out of this.linechartDatas$
   }
 
   onResize(event : UIEvent) : [number, number] { // show not only take into account resize but initialsize too
@@ -82,9 +84,4 @@ export class CountryStatsLinechartComponent implements OnInit {
     return this.view = [800, 400]
   }
 
-}
-
-interface ILineChartsDatasRow{
-  name: string
-  series: { name: string, value: number }[]
 }
