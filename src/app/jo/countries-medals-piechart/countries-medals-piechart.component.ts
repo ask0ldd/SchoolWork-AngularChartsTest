@@ -16,10 +16,12 @@ export class CountriesMedalsPiechartComponent implements OnInit {
   // @ViewChild('customTooltip', { static: true }) customTooltip: TemplateRef<any>
 
   // datas : WritableSignal<ICountryJOStats[] | null>
-  processedValue : any
+  // processedValue : any
+
   pieDatas : {name : string, value : number} []
   numberOfJOs : number
   pieDatas$ : Observable<{name : string, value : number} []>
+  numberOfJOs$: Observable<number>;
 
   colorScheme : Color = {
     domain:['#956065', '#793d52', '#89a1db', '#9780a1', '#bfe0f1'],
@@ -37,6 +39,7 @@ export class CountriesMedalsPiechartComponent implements OnInit {
 
     // obs
     this.pieDatas$ = this.JOService.getPieChartDatas$()
+    this.numberOfJOs$ = this.JOService.getNumberOfJOs$()
   }
 
   setLabelFormatting(label : string): string {

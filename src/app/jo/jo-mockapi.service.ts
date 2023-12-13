@@ -58,13 +58,29 @@ export class JoMockapiService {
     )
   }
 
-  getPieChartDatas$(){
+  getPieChartDatas$() : Observable<{name : string, value : number} []>{
     return this.retrieveJODatas$().pipe(
       map((datas : ICountryJOStats[]) => datas
         .map((countryDatas : ICountryJOStats) => ({name : countryDatas.country, value : countryDatas.participations.reduce((accumulator : number, participation : ISingleEventStats) => accumulator + participation.medalsCount, 0)}))
       )
     )
   }
+
+  getNumberOfJOs$() : Observable<number>{
+    return this.retrieveJODatas$().pipe(
+      map((datas : ICountryJOStats[]) => {
+          let eventsDates : number[] = []
+          datas.forEach(countryStats => {
+            countryStats.participations.forEach(participation => {
+              if(!eventsDates.includes(participation.year)) eventsDates.push(participation.year)
+            })
+          })
+          return eventsDates.length
+        } 
+      )
+    )
+  }
+
 
   // ********* Non Obs
 
