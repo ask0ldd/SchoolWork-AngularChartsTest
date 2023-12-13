@@ -1,8 +1,7 @@
-import { Component, EventEmitter, OnInit, TemplateRef, ViewChild, ViewEncapsulation, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, OnInit, ViewEncapsulation } from '@angular/core';
 import { JoMockapiService } from '../jo-mockapi.service';
-import { ICountryJOStats } from 'src/app/models/countryJOStats';
-import { Observable, of } from 'rxjs';
-import { Color, ScaleType, TooltipContentComponent } from '@swimlane/ngx-charts';
+import { Observable } from 'rxjs';
+import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -14,8 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CountriesMedalsPiechartComponent implements OnInit {
 
   // @ViewChild('customTooltip', { static: true }) customTooltip: TemplateRef<any>
-
-  // datas : WritableSignal<ICountryJOStats[] | null>
   // processedValue : any
 
   pieDatas : {name : string, value : number} []
@@ -33,11 +30,6 @@ export class CountriesMedalsPiechartComponent implements OnInit {
   constructor(private JOService : JoMockapiService, private router : Router, private route : ActivatedRoute,){ }
 
   async ngOnInit(): Promise<void> {
-    // non obs
-    this.pieDatas = await this.JOService.getPieDatas()
-    this.numberOfJOs = await this.JOService.getNumberOfJOs()
-
-    // obs
     this.pieDatas$ = this.JOService.getPieChartDatas$()
     this.numberOfJOs$ = this.JOService.getNumberOfJOs$()
   }
@@ -48,7 +40,6 @@ export class CountriesMedalsPiechartComponent implements OnInit {
 
   onSelect(event : EventEmitter<any>){
     // event obj : {name: 'Italy', value: 96, label: 'Italy'}
-    // console.log(event)
     if(event.name != null) {
       this.router.navigateByUrl(`countrylinechart/${event.name.toLowerCase()}`) 
       return

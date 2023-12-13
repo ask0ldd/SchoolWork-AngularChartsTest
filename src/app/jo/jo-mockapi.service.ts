@@ -1,7 +1,7 @@
-import { Injectable, WritableSignal, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ICountryJOStats } from '../models/countryJOStats';
-import { Observable, of, reduce, find, map, catchError } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, map, catchError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { ISingleEventStats } from '../models/singleEventState';
 
 @Injectable({
@@ -48,12 +48,12 @@ export class JoMockapiService {
     )
   }
 
-  getCountryLineChartDatas$(country : string) : Observable<ILineChartsDatasRow[]>{
+  getCountryLineChartDatas$(country : string) : Observable<ILineChartsDatas>{
     return this.retrieveJODatas$().pipe(
         map((datas : ICountryJOStats[]) => {
           const selectedCountryDatas = datas.find((datas) => datas.country.toLowerCase() === country)
-          if(selectedCountryDatas) return [{name: country, series: selectedCountryDatas?.participations.map(participation => ({name : participation.year.toString(), value : participation.medalsCount}))}]
-          return [{name : country, series : [{name : '', value : 0 }]}]
+          if(selectedCountryDatas) return {name: country, series: selectedCountryDatas?.participations.map(participation => ({name : participation.year.toString(), value : participation.medalsCount}))}
+          return {name : country, series : [{name : '', value : 0 }]}
         })
     )
   }
@@ -81,7 +81,6 @@ export class JoMockapiService {
     )
   }
 
-
   // ********* Non Obs
 
   async retrieveJODatas(){
@@ -103,10 +102,11 @@ export class JoMockapiService {
     return null
   }
 
-  async getLineChartDatasFor(country : string) : Promise<ILineChartsDatasRow[]>{
+  async getLineChartDatasFor(country : string) : Promise<ILineChartsDatas>{
     const selectedCountryDatas = (await this.JODatas).find((datas : ICountryJOStats) => datas.country.toLowerCase() === country)
-    if(selectedCountryDatas) return [{name: country, series: selectedCountryDatas.participations.map(participation => ({name : participation.year.toString(), value : participation.medalsCount}))}]
-    return []
+    if(selectedCountryDatas) return {name: country, series: selectedCountryDatas.participations.map(participation => ({name : participation.year.toString(), value : participation.medalsCount}))}
+    // return []
+    return {name : '', series : []}
   }
 
   async getPieDatas() : Promise<{name : string, value : number} []>{
@@ -126,8 +126,10 @@ export class JoMockapiService {
 
 }
 
-// name and series.name required by ngx charts
-export interface ILineChartsDatasRow{
+// datastructure required by ngx charts
+export interface ILineChartsDatas{
+  // name = country
   name: string
+  // name = year
   series: { name: string, value: number }[]
 }

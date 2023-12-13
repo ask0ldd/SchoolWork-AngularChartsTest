@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit, Signal, ViewEncapsulation, WritableSignal, signal } from '@angular/core';
-import { ILineChartsDatasRow, JoMockapiService } from '../jo-mockapi.service';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ILineChartsDatas, JoMockapiService } from '../jo-mockapi.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -18,14 +18,14 @@ export class CountryStatsLinechartComponent implements OnInit {
   minYaxis : number
   maxYaxis : number
   view : [number, number] = [800, 400]
-  linechartDatas : ILineChartsDatasRow[] | null
+  linechartDatas : ILineChartsDatas | null
   // lineChartDatasSignal : WritableSignal<ILineChartsDatasRow[] | null> = signal(null)
   totalAthletes : number | null
   // totalAthletesSignal : WritableSignal<number | null> = signal(null)
 
   totalMedals$ : Observable<number>
   totalAthletes$ : Observable<number>
-  linechartDatas$: Observable<ILineChartsDatasRow[]>
+  linechartDatas$: Observable<ILineChartsDatas>
   
   constructor(private router:Router, private route: ActivatedRoute, private joService : JoMockapiService){ }
 
@@ -42,13 +42,13 @@ export class CountryStatsLinechartComponent implements OnInit {
     this.totalAthletes = await this.joService.getTotalAthletesFor(this.countryName)
     // this.totalAthletesSignal.set(await this.joService.getTotalAthletesFor(this.countryName))
 
-    if(this.linechartDatas.length > 0){
-      const medalsList = this.linechartDatas[0].series?.map(serie => serie.value)
+    if(this.linechartDatas){
+      const medalsList = this.linechartDatas.series?.map(serie => serie.value)
       this.minYaxis = Math.floor((Math.min(...medalsList) / 10)) * 10
       if(this.minYaxis < 0) this.minYaxis = 0
       this.maxYaxis = Math.ceil((Math.max(...medalsList) / 10)) * 10
 
-      this.totalMedals = this.linechartDatas[0].series.reduce((acc, serie) => acc + serie.value, 0)
+      this.totalMedals = this.linechartDatas.series.reduce((acc, serie) => acc + serie.value, 0)
 
       // if maxY-minY <= 20 then ticks are space by 5
       // if > 20 then spaced by 10

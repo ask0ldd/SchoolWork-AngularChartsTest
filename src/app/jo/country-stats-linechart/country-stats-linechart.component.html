@@ -4,7 +4,7 @@
         <div class="statsCells">
             <div>
                 <p>Number of entries</p>
-                <p class="stat">{{datas[0].series.length}}</p>
+                <p class="stat">{{datas.series.length}}</p>
             </div>
             <div>
                 <p>Total number of medals</p>
@@ -17,7 +17,7 @@
         </div>
     </div>
     <ngx-charts-line-chart [trimXAxisTicks]="true" [trimYAxisTicks]="true" 
-    [results]="datas" [xAxis]="true" [autoScale]="false" [yAxis]="true" [showGridLines]="true" 
+    [results]="[datas]" [xAxis]="true" [autoScale]="false" [yAxis]="true" [showGridLines]="true" 
     [view]="view" [yScaleMin]="minYaxis" [yScaleMax]="maxYaxis"
     [yAxisTicks]="YticksList" [xAxisLabel]="'Dates'" [showXAxisLabel]="true">
     </ngx-charts-line-chart>
